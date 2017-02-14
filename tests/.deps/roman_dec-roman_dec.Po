@@ -1,0 +1,6 @@
+roman_dec-roman_dec.o: roman_dec.c /usr/include/stdc-predef.h \
+ ../src/roman.h
+
+/usr/include/stdc-predef.h:
+
+../src/roman.h:

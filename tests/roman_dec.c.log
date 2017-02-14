@@ -1,0 +1,2 @@
+../build-aux/test-driver: line 107: ./roman_dec.c: Permission denied
+FAIL roman_dec.c (exit status: 126)
