@@ -1,4 +1,4 @@
 Running suite(s): Roman
-0%: Checks: 1, Failures: 1, Errors: 0
-roman_dec.c:15:F:Core:test_roman_create:0: Assertion 'decimal_number(roman) == 20' failed: decimal_number(roman) == 0, 20 == 20
+0%: Checks: 1, Failures: 0, Errors: 1
+roman_dec.c:9:E:Core:test_roman_create:0: (after this point) Received signal 11 (Segmentation fault)
 FAIL roman_dec (exit status: 1)

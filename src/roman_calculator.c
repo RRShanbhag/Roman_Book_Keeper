@@ -1,6 +1,10 @@
 #include <stdlib.h>
 #include "roman.h"
 
+struct Roman
+{
+	int Dnum;
+};
 Roman *roman_create(char *Rnum, int Dnum)
 {
 	return NULL;
@@ -8,7 +12,7 @@ Roman *roman_create(char *Rnum, int Dnum)
 
 int  decimal_number(Roman * roman)
 {
-	return 0;
+	return roman->Dnum;
 }
 
 char *roman_number(Roman * roman)
