@@ -69,10 +69,23 @@ int roman2dec(char* roman_dec)
 	bool units = True;
 	int count = 1;
 
-	while(roman_dec[index] == 'I')
+	if(roman_dec[index] == 'I' && roman_dec[index+1] == 'V')
+		{
+			value += 4;
+			index += 2;
+			units = False;
+		}
+
+	if(roman_dec[index] == 'V')
+	{
+		value += 5;
+		index++;
+	} 
+	while(roman_dec[index] == 'I' && units == True && count < 4)
 	{
 		value += 1;
 		index++;
+		count++;
 	}
 
 	units = False;
