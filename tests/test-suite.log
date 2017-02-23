@@ -3,20 +3,12 @@
 ================================================
 
 # TOTAL: 1
-# PASS:  0
+# PASS:  1
 # SKIP:  0
 # XFAIL: 0
-# FAIL:  1
+# FAIL:  0
 # XPASS: 0
 # ERROR: 0
 
 .. contents:: :depth: 2
-
-FAIL: roman_dec
-===============
-
-Running suite(s): Roman
-0%: Checks: 1, Failures: 1, Errors: 0
-roman_dec.c:16:F:Core:test_roman_create:0: Assertion 'roman2dec(roman_number(roman)) == decimal_number(roman)' failed: roman2dec(roman_number(roman)) == 1, decimal_number(roman) == 9
-FAIL roman_dec (exit status: 1)
 
