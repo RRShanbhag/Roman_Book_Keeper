@@ -3,6 +3,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "../src/roman.h"
 #include <check.h>
 
@@ -10,10 +11,10 @@ START_TEST(test_roman_create)
 {
     Roman *roman;
 
-    roman = roman_create("I", 1);
+    roman = roman_create("IIII", NAN);
     
     ck_assert_int_eq(roman2dec(roman_number(roman)),decimal_number(roman));
-    ck_assert_str_eq(roman_number(roman), "I");
+    ck_assert_str_eq(roman_number(roman), "III");
     
     roman_free(roman);
     

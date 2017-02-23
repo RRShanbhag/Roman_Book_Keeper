@@ -69,8 +69,11 @@ int roman2dec(char* roman_dec)
 	bool units = True;
 	int count = 1;
 
-	if(roman_dec[index] == 'I')
-		value = 1;
+	while(roman_dec[index] == 'I')
+	{
+		value += 1;
+		index++;
+	}
 
 	units = False;
 	return value;
