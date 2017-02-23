@@ -10,10 +10,10 @@ START_TEST(test_roman_create)
 {
     Roman *roman;
 
-    roman = roman_create("XX", 20);
+    roman = roman_create("I", 1);
     
-    ck_assert_int_eq(decimal_number(roman), 20);
-    ck_assert_str_eq(roman_number(roman), "XX");
+    ck_assert_int_eq(roman2dec(roman_number(roman)),decimal_number(roman));
+    ck_assert_str_eq(roman_number(roman), "I");
     
     roman_free(roman);
     
