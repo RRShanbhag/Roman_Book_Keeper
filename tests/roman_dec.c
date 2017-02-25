@@ -6,18 +6,41 @@
 #include <math.h>
 #include "../src/roman.h"
 #include <check.h>
+#include <string.h>
+
+char* get_romans();
 
 START_TEST(test_roman_create)
 {
-    Roman *roman;
 
-    roman = roman_create("IX", 9);
+	FILE * fp;
+    char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    int count = 1;
+
+    fp = fopen("../Roman_Numbers.txt", "r");
+    if (fp == NULL)
+        exit(EXIT_FAILURE);
+
+    Roman *roman;
+    int i = 1;
     
-    ck_assert_int_eq(roman2dec(roman_number(roman)),decimal_number(roman));
-    ck_assert_str_eq(roman_number(roman), "IX");
+    while (i < 100)
+    {
+    line = get_romans(fp);
+    roman = roman_create(line, i);
     
-    roman_free(roman);
+    ck_assert_str_eq(roman_number(roman), line);
+   	ck_assert_int_eq(roman2dec(roman_number(roman)),decimal_number(roman));
+   	
     
+   	roman_free(roman);	
+   	i++;
+    } 
+    fclose(fp);
+    if (line)
+        free(line);  
 }
 END_TEST
 
@@ -33,6 +56,26 @@ Suite * roman_suite(void)
 	suite_add_tcase(s, tc_core);
 
 	return s;
+}
+
+char* get_romans(FILE * fp)
+{
+	char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    //while ((read = getline(&line, &len, fp)) != -1) {
+        //printf("Retrieved line of length %zu :\n", read);
+        read = getline(&line, &len, fp);
+        if(read != -1)
+        {
+        line[strlen(line)-1] = '\0';
+        printf("%s:%d\n", line);
+        return line;
+        }
+    //}
+
+    
+   	
 }
 
 int main(void)

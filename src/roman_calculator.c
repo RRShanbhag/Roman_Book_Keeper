@@ -66,36 +66,80 @@ int roman2dec(char* roman_dec)
 {
 	int value = 0;
 	int index = 0;
-	bool units = True;
-	int count = 1;
+	bool units = True, tens = True, hundereds = True, thousands = True;
 
-	if(roman_dec[index] == 'I' && roman_dec[index+1] == 'X')
+	
+	//TENS PLACE
+	if (roman_dec[index] == 'X' || roman_dec[index] == 'L' && tens == True)
 	{
-		value += 9;
-		index+= 2;
+		hundereds = False, thousands = False;
+		int count = 1;
+
+		if(roman_dec[index] == 'X' && roman_dec[index+1] == 'C')
+		{
+			value += 90;
+			index+= 2;
+			tens = False;
+		}
+
+		if(roman_dec[index] == 'X' && roman_dec[index+1] == 'L')
+		{
+			value += 40;
+			index += 2;
+			tens = False;
+		}
+
+		if(roman_dec[index] == 'L')
+		{
+			value += 50;
+			index++;
+		} 
+
+		while(roman_dec[index] == 'X' && units == True && count < 4)
+		{
+			value += 10;
+			index++;
+			count++;
+		}
+
+		tens = False;
+	}
+
+
+	//UNITS PLACE
+	if (roman_dec[index] == 'I' || roman_dec[index] == 'V' && units == True)
+	{
+		hundereds = False, thousands = False, tens = False;
+		int count = 1;
+
+		if(roman_dec[index] == 'I' && roman_dec[index+1] == 'X')
+		{
+			value += 9;
+			index+= 2;
+			units = False;
+		}
+
+		if(roman_dec[index] == 'I' && roman_dec[index+1] == 'V')
+		{
+			value += 4;
+			index += 2;
+			units = False;
+		}
+
+		if(roman_dec[index] == 'V')
+		{
+			value += 5;
+			index++;
+		} 
+
+		while(roman_dec[index] == 'I' && units == True && count < 4)
+		{
+			value += 1;
+			index++;
+			count++;
+		}
+
 		units = False;
 	}
-
-	if(roman_dec[index] == 'I' && roman_dec[index+1] == 'V')
-	{
-		value += 4;
-		index += 2;
-		units = False;
-	}
-
-	if(roman_dec[index] == 'V')
-	{
-		value += 5;
-		index++;
-	} 
-
-	while(roman_dec[index] == 'I' && units == True && count < 4)
-	{
-		value += 1;
-		index++;
-		count++;
-	}
-
-	units = False;
 	return value;
 }
