@@ -68,11 +68,56 @@ int roman2dec(char* roman_dec)
 	int index = 0;
 	bool units = True, tens = True, hundereds = True, thousands = True;
 
+	//THOUSANDS PLACE
+	if (roman_dec[index] == 'M' && thousands == True)
+	{
+		int count = 0;
+		while(roman_dec[index] == 'M' && count < 10)
+		{
+			value+=1000;
+			index++;
+			count++;
+		}
+	
+	thousands=False;			//printf("line45: %d\n", value);
+	}
+
+	//HUNDEREDS PLACE
+	if (roman_dec[index] == 'C' || roman_dec[index] == 'D' && hundereds == True)
+	{
+		thousands = False;
+		int count = 1;
+
+		if(roman_dec[index] == 'C' && roman_dec[index+1] == 'M')
+		{
+			value += 900;
+			index += 2;
+			hundereds = False;
+		}
+		if(roman_dec[index] == 'C' && roman_dec[index+1] == 'D')
+		{
+			value += 400;
+			index += 2;
+			hundereds=False;
+		}
+		if(roman_dec[index] == 'D')
+		{
+			value += 500;
+			index++;
+		}
+		while(roman_dec[index] == 'C' && hundereds == True && count < 4)
+		{
+			value += 100;
+			index++;
+		}
+	hundereds = False;
+	}
+
 	
 	//TENS PLACE
 	if (roman_dec[index] == 'X' || roman_dec[index] == 'L' && tens == True)
 	{
-		hundereds = False, thousands = False;
+		hundereds = False; thousands = False;
 		int count = 1;
 
 		if(roman_dec[index] == 'X' && roman_dec[index+1] == 'C')
@@ -95,7 +140,7 @@ int roman2dec(char* roman_dec)
 			index++;
 		} 
 
-		while(roman_dec[index] == 'X' && units == True && count < 4)
+		while(roman_dec[index] == 'X' && tens == True && count < 4)
 		{
 			value += 10;
 			index++;
@@ -109,7 +154,7 @@ int roman2dec(char* roman_dec)
 	//UNITS PLACE
 	if (roman_dec[index] == 'I' || roman_dec[index] == 'V' && units == True)
 	{
-		hundereds = False, thousands = False, tens = False;
+		hundereds = False; thousands = False; tens = False;
 		int count = 1;
 
 		if(roman_dec[index] == 'I' && roman_dec[index+1] == 'X')

@@ -26,14 +26,13 @@ START_TEST(test_roman_create)
     Roman *roman;
     int i = 1;
     
-    while (i < 100)
+    while (i <= 2000)
     {
     line = get_romans(fp);
     roman = roman_create(line, i);
     
     ck_assert_str_eq(roman_number(roman), line);
    	ck_assert_int_eq(roman2dec(roman_number(roman)),decimal_number(roman));
-   	
     
    	roman_free(roman);	
    	i++;
@@ -63,19 +62,12 @@ char* get_romans(FILE * fp)
 	char * line = NULL;
     size_t len = 0;
     ssize_t read;
-    //while ((read = getline(&line, &len, fp)) != -1) {
-        //printf("Retrieved line of length %zu :\n", read);
-        read = getline(&line, &len, fp);
-        if(read != -1)
-        {
-        line[strlen(line)-1] = '\0';
-        printf("%s:%d\n", line);
+    read = getline(&line, &len, fp);
+    if(read != -1)
+    {
+       	line[strlen(line)-1] = '\0';
         return line;
-        }
-    //}
-
-    
-   	
+    }
 }
 
 int main(void)
