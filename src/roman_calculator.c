@@ -15,6 +15,9 @@
 /*-------------------------Global Variables--------------------------*/
 char roman_numbers[7] = {'M', 'D', 'C', 'L', 'X', 'V', 'I'};
 int divisors[7] = {M, D, C, L, X, V, I};
+char *roman_result = NULL;
+char* temp=NULL;
+size_t roman_result_size = 0, roman_result_index = 0;
 
 typedef int bool;
 #define True 1
@@ -25,6 +28,7 @@ struct Roman
 	int Dnum;
 	char *Rnum;
 };
+
 Roman *roman_create(char *Rnum, int Dnum)
 {
 	Roman *roman = malloc(sizeof(Roman));
@@ -187,4 +191,154 @@ int roman2dec(char* roman_dec)
 		units = False;
 	}
 	return value;
+}
+
+/*
+*	This converts Decimal to Roman number.Get each Decimal place value
+*	and assign Roman number to the decimal value using get_unit_roman 
+*	function. If the value is greater or equal to 5000, the value of 
+*	Roman Number is not defined in this problem and thus reports error.
+*/
+
+char* dec2roman(int value)
+{
+	int remainder = value;
+	int quotient1 = 0;
+	int quotient2 = 0;
+	int digit_place = 0;
+	
+	roman_result=NULL;
+	roman_result_size = 0; 
+	roman_result_index = 0;
+	
+	while(remainder != 0)
+	{
+		remainder = get_unit_roman(value, digit_place);
+		digit_place++;
+		if (remainder == 0)
+			break;
+		value = remainder;	
+	}
+
+	insert_char('\0');
+	return roman_result;
+}
+
+/*
+*	Get each value by first dividing in the order of the highest roman
+*	number i.e. M. Since M is just repeatition of the thousand place 
+*	value, it is just repeated equal to resulting quotient. Next divisor
+*	is D i.e. 500. If the quotient is 0 and the remainder is 0, the value 
+*	assigned would be D. If the quotient is 0 and the remainder is not 0 
+*	then divide by 100. If the new quotient is 4 then Roman value for 
+*	hundered's place is CD. If the new quotient is less than 4 then the 
+*	Roman number value is C repeatitions of the new quotient. However,
+*	quotient when divided by D is 1 and the new quotient divided by C 
+* 	is 4 then Roman number at Hundered's place is CM otherwise D followed 
+*	by number of C repeatitions of the new quotient. Similar steps is 
+*	followed for Ten's and Unit's place as well.
+*/
+
+int get_unit_roman(int value, int digit_place)
+{
+	int remainder = 0;
+	int quotient1 = 0, quotient2 = 0;
+	char ch;
+	
+	remainder = value % divisors[digit_place];
+	quotient1 = value / divisors[digit_place];
+
+	if (roman_numbers[digit_place] == 'C' || roman_numbers[digit_place] == 'X' || roman_numbers[digit_place] == 'I')
+		return remainder;
+	
+	if (digit_place == 0)
+	{
+		for(int i = 0; i < quotient1; i++)
+		{
+			ch = roman_numbers[digit_place];
+			insert_char(ch);
+		}
+		return remainder; 
+	}
+	if (remainder == 0)
+	{
+		ch = roman_numbers[digit_place];
+		insert_char(ch);
+		return remainder;
+	}
+
+	value = remainder;
+	remainder = value % divisors[digit_place+1];
+	quotient2 = value / divisors[digit_place+1];
+
+	if (quotient1 == 0)
+	{
+		if (quotient2 == 4)
+			{
+				ch = roman_numbers[digit_place+1];
+				insert_char(ch);
+				ch = roman_numbers[digit_place];
+				insert_char(ch);
+			}
+			
+		if (quotient2 != 0 && quotient2 != 4)
+		{
+			for (int i = 0; i < quotient2; i++)
+			{
+				ch = roman_numbers[digit_place+1];
+				insert_char(ch);
+			}
+		}
+		return remainder;
+	}
+
+	if (quotient1 == 1)
+	{
+		if (quotient2 == 4)
+		{
+			ch = roman_numbers[digit_place+1];
+			insert_char(ch);
+			ch = roman_numbers[digit_place-1];
+			insert_char(ch);
+		}
+		if (quotient2 == 0)
+		{
+			ch = roman_numbers[digit_place];
+			insert_char(ch);
+		}
+		
+		if (quotient2 != 0 && quotient2 != 4)
+		{
+			ch = roman_numbers[digit_place];
+			insert_char(ch);
+			for(int i = 0; i < quotient2; i++)
+			{
+				ch = roman_numbers[digit_place+1];
+				insert_char(ch);
+			}
+		}
+	}
+	return remainder;
+}
+
+/*
+*	This function is for inserting characters dynamically for values
+*	obtained in get_unit_roman function. 
+*/
+void insert_char(char ch)
+{
+	if (roman_result_size <= roman_result_index)
+	{
+		roman_result_size += 1;
+		temp = realloc(roman_result, roman_result_size);
+		if(!temp)
+		{
+			free(roman_result);
+			roman_result = NULL;
+			//break;
+		}
+		roman_result = temp;
+	}
+	roman_result[roman_result_index++] = ch;
+	return;	
 }

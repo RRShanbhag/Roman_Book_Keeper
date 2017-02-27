@@ -29,11 +29,10 @@ START_TEST(test_roman_create)
     while (i <= 2000)
     {
     line = get_romans(fp);
-    roman = roman_create(line, i);
-    
-    ck_assert_str_eq(roman_number(roman), line);
-   	ck_assert_int_eq(roman2dec(roman_number(roman)),decimal_number(roman));
-    
+    roman = roman_create(dec2roman(i), roman2dec(line));
+    ck_assert_int_eq(decimal_number(roman),i);
+    ck_assert_str_eq(roman_number(roman),line);
+   	
    	roman_free(roman);	
    	i++;
     } 
