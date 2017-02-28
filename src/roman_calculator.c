@@ -2,6 +2,7 @@
 #include "roman.h"
 #include <math.h>
 #include <string.h>
+#include <stdio.h>
 
 /*------------------------- Roman Value Definitions -----------------*/
 #define M 1000
@@ -49,7 +50,7 @@ int  decimal_number(Roman * roman)
 	return roman->Dnum;
 }
 
-char *roman_number(Roman * roman)
+char* roman_number(Roman * roman)
 {
 	return roman->Rnum;
 }
@@ -341,4 +342,57 @@ void insert_char(char ch)
 	}
 	roman_result[roman_result_index++] = ch;
 	return;	
+}
+
+char* get_roman()
+{
+	char *line = NULL, *tmp = NULL;
+    size_t size = 0, index = 0;
+    int ch = EOF;
+    int error;
+
+	while(ch)
+	{
+		error = 10;
+		ch = getc(stdin);
+
+		if (ch == ' ' || ch == '\t')
+    	{
+    		error = INVALID_SPACE_ERROR;
+    		break;
+    	}
+
+    	for(int i = 0; i < 7; i++)
+    	{
+    		if(ch == roman_numbers[i] || ch == '\n')
+    			error = VALID_CHAR;
+    	}
+
+    	if (error != 0)
+    	{
+    		error = INVALID_CHAR_ERROR;
+    		break;
+    	}
+
+		if (ch == EOF || ch == '\n')
+            ch = 0;
+
+        if (size <= index) 
+        {
+            size += 1;
+            tmp = realloc(line, size);
+            if (!tmp) 
+            {
+                free(line);
+                line = NULL;
+                break;
+            }
+
+            line = tmp;
+        }
+
+        line[index++] = ch;
+	}
+	error_check(error);
+	return line;
 }
