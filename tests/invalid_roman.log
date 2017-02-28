@@ -1,20 +1,3 @@
-================================================
-   Roman_Calculator 1.0: tests/test-suite.log
-================================================
-
-# TOTAL: 2
-# PASS:  1
-# SKIP:  0
-# XFAIL: 1
-# FAIL:  0
-# XPASS: 0
-# ERROR: 0
-
-.. contents:: :depth: 2
-
-XFAIL: invalid_roman
-====================
-
 Running suite(s): Invalid_Roman
 0%: Checks: 6, Failures: 6, Errors: 0
 invalid_roman.c:19:F:Limits:test_5Is:0: Assertion 'decimal_number(roman) == roman2dec("IIIII")' failed: decimal_number(roman) == 5, roman2dec("IIIII") == 3
@@ -24,4 +7,3 @@ invalid_roman.c:58:F:Limits:test_DD:0: Assertion 'decimal_number(roman) == roman
 invalid_roman.c:71:F:Limits:test_VL:0: Assertion 'decimal_number(roman) == roman2dec("VL")' failed: decimal_number(roman) == 55, roman2dec("VL") == 5
 invalid_roman.c:85:F:Limits:test_A:0: Assertion 'roman_number(roman) == dec2roman(0)' failed: roman_number(roman) == "A", dec2roman(0) == ""
 XFAIL invalid_roman (exit status: 1)
-

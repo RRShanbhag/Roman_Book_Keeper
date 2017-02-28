@@ -87,8 +87,9 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-TESTS = roman_dec$(EXEEXT)
-check_PROGRAMS = roman_dec$(EXEEXT)
+TESTS = roman_dec$(EXEEXT) invalid_roman$(EXEEXT)
+XFAIL_TESTS = invalid_roman$(EXEEXT)
+check_PROGRAMS = roman_dec$(EXEEXT) invalid_roman$(EXEEXT)
 subdir = tests
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -99,13 +100,19 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_roman_dec_OBJECTS = roman_dec-roman_dec.$(OBJEXT)
-roman_dec_OBJECTS = $(am_roman_dec_OBJECTS)
-roman_dec_DEPENDENCIES = $(top_builddir)/src/libroman.la
+am_invalid_roman_OBJECTS = invalid_roman-invalid_roman.$(OBJEXT)
+invalid_roman_OBJECTS = $(am_invalid_roman_OBJECTS)
+invalid_roman_DEPENDENCIES = $(top_builddir)/src/libroman.la
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
+invalid_roman_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(invalid_roman_CFLAGS) \
+	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_roman_dec_OBJECTS = roman_dec-roman_dec.$(OBJEXT)
+roman_dec_OBJECTS = $(am_roman_dec_OBJECTS)
+roman_dec_DEPENDENCIES = $(top_builddir)/src/libroman.la
 roman_dec_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(roman_dec_CFLAGS) \
 	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
@@ -143,8 +150,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(roman_dec_SOURCES)
-DIST_SOURCES = $(roman_dec_SOURCES)
+SOURCES = $(invalid_roman_SOURCES) $(roman_dec_SOURCES)
+DIST_SOURCES = $(invalid_roman_SOURCES) $(roman_dec_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -502,6 +509,9 @@ top_srcdir = @top_srcdir@
 roman_dec_SOURCES = roman_dec.c $(top_builddir)/src/roman.h
 roman_dec_CFLAGS = @CHECK_CFLAGS@
 roman_dec_LDADD = $(top_builddir)/src/libroman.la @CHECK_LIBS@
+invalid_roman_SOURCES = invalid_roman.c $(top_builddir)/src/roman.h
+invalid_roman_CFLAGS = @CHECK_CFLAGS@
+invalid_roman_LDADD = $(top_builddir)/src/libroman.la @CHECK_LIBS@
 all: all-am
 
 .SUFFIXES:
@@ -545,6 +555,10 @@ clean-checkPROGRAMS:
 	echo " rm -f" $$list; \
 	rm -f $$list
 
+invalid_roman$(EXEEXT): $(invalid_roman_OBJECTS) $(invalid_roman_DEPENDENCIES) $(EXTRA_invalid_roman_DEPENDENCIES) 
+	@rm -f invalid_roman$(EXEEXT)
+	$(AM_V_CCLD)$(invalid_roman_LINK) $(invalid_roman_OBJECTS) $(invalid_roman_LDADD) $(LIBS)
+
 roman_dec$(EXEEXT): $(roman_dec_OBJECTS) $(roman_dec_DEPENDENCIES) $(EXTRA_roman_dec_DEPENDENCIES) 
 	@rm -f roman_dec$(EXEEXT)
 	$(AM_V_CCLD)$(roman_dec_LINK) $(roman_dec_OBJECTS) $(roman_dec_LDADD) $(LIBS)
@@ -555,6 +569,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/invalid_roman-invalid_roman.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/roman_dec-roman_dec.Po@am__quote@
 
 .c.o:
@@ -577,6 +592,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
+
+invalid_roman-invalid_roman.o: invalid_roman.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(invalid_roman_CFLAGS) $(CFLAGS) -MT invalid_roman-invalid_roman.o -MD -MP -MF $(DEPDIR)/invalid_roman-invalid_roman.Tpo -c -o invalid_roman-invalid_roman.o `test -f 'invalid_roman.c' || echo '$(srcdir)/'`invalid_roman.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/invalid_roman-invalid_roman.Tpo $(DEPDIR)/invalid_roman-invalid_roman.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='invalid_roman.c' object='invalid_roman-invalid_roman.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(invalid_roman_CFLAGS) $(CFLAGS) -c -o invalid_roman-invalid_roman.o `test -f 'invalid_roman.c' || echo '$(srcdir)/'`invalid_roman.c
+
+invalid_roman-invalid_roman.obj: invalid_roman.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(invalid_roman_CFLAGS) $(CFLAGS) -MT invalid_roman-invalid_roman.obj -MD -MP -MF $(DEPDIR)/invalid_roman-invalid_roman.Tpo -c -o invalid_roman-invalid_roman.obj `if test -f 'invalid_roman.c'; then $(CYGPATH_W) 'invalid_roman.c'; else $(CYGPATH_W) '$(srcdir)/invalid_roman.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/invalid_roman-invalid_roman.Tpo $(DEPDIR)/invalid_roman-invalid_roman.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='invalid_roman.c' object='invalid_roman-invalid_roman.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(invalid_roman_CFLAGS) $(CFLAGS) -c -o invalid_roman-invalid_roman.obj `if test -f 'invalid_roman.c'; then $(CYGPATH_W) 'invalid_roman.c'; else $(CYGPATH_W) '$(srcdir)/invalid_roman.c'; fi`
 
 roman_dec-roman_dec.o: roman_dec.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(roman_dec_CFLAGS) $(CFLAGS) -MT roman_dec-roman_dec.o -MD -MP -MF $(DEPDIR)/roman_dec-roman_dec.Tpo -c -o roman_dec-roman_dec.o `test -f 'roman_dec.c' || echo '$(srcdir)/'`roman_dec.c
@@ -794,6 +823,13 @@ recheck: all $(check_PROGRAMS)
 roman_dec.log: roman_dec$(EXEEXT)
 	@p='roman_dec$(EXEEXT)'; \
 	b='roman_dec'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+invalid_roman.log: invalid_roman$(EXEEXT)
+	@p='invalid_roman$(EXEEXT)'; \
+	b='invalid_roman'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \

@@ -280,7 +280,7 @@ int get_unit_roman(int value, int digit_place)
 				ch = roman_numbers[digit_place];
 				insert_char(ch);
 			}
-			
+
 		if (quotient2 != 0 && quotient2 != 4)
 		{
 			for (int i = 0; i < quotient2; i++)
