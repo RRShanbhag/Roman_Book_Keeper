@@ -814,7 +814,6 @@ uninstall-am:
 
 .PRECIOUS: Makefile
 
-
 run:
 	./src/main
 

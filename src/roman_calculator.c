@@ -73,123 +73,153 @@ int roman2dec(char* roman_dec)
 	int index = 0;
 	bool units = True, tens = True, hundereds = True, thousands = True;
 
-	//THOUSANDS PLACE
-	if (roman_dec[index] == 'M' && thousands == True)
+	while(index < strlen(roman_dec))
 	{
-		int count = 0;
-		while(roman_dec[index] == 'M' && count < 10)
+		if(roman_dec[index] == '\n')
+			index = strlen(roman_dec);
+
+		//THOUSANDS PLACE
+		if (roman_dec[index] == 'M')
 		{
-			value+=1000;
-			index++;
-			count++;
+
+			int count = 0;
+			if(thousands == True)
+			{
+				while(roman_dec[index] == 'M' && count < 10)
+				{
+					value+=1000;
+					index++;
+					count++;
+				}
+			}
+			else
+			{
+				error_check(INVALID_ROMAN_NUMBER_ERROR);
+			}
+		thousands=False;
 		}
-	
-	thousands=False;			//printf("line45: %d\n", value);
-	}
 
-	//HUNDEREDS PLACE
-	if (roman_dec[index] == 'C' || roman_dec[index] == 'D' && hundereds == True)
-	{
-		thousands = False;
-		int count = 1;
-
-		if(roman_dec[index] == 'C' && roman_dec[index+1] == 'M')
+		//HUNDEREDS PLACE
+		if (roman_dec[index] == 'C' || roman_dec[index] == 'D')
 		{
-			value += 900;
-			index += 2;
+			thousands = False;
+			int count = 1;
+			if(hundereds == True)
+			{
+				if(roman_dec[index] == 'C' && roman_dec[index+1] == 'M')
+				{
+					value += 900;
+					index += 2;
+					hundereds = False;
+				}
+				if(roman_dec[index] == 'C' && roman_dec[index+1] == 'D')
+				{
+					value += 400;
+					index += 2;
+					hundereds=False;
+				}
+				if(roman_dec[index] == 'D')
+				{
+					value += 500;
+					index++;
+				}
+				while(roman_dec[index] == 'C' && hundereds == True && count < 4)
+				{
+					value += 100;
+					index++;
+				}
+			}
+			else
+			{
+				error_check(INVALID_ROMAN_NUMBER_ERROR);
+			}
 			hundereds = False;
 		}
-		if(roman_dec[index] == 'C' && roman_dec[index+1] == 'D')
-		{
-			value += 400;
-			index += 2;
-			hundereds=False;
-		}
-		if(roman_dec[index] == 'D')
-		{
-			value += 500;
-			index++;
-		}
-		while(roman_dec[index] == 'C' && hundereds == True && count < 4)
-		{
-			value += 100;
-			index++;
-		}
-	hundereds = False;
-	}
 
-	
-	//TENS PLACE
-	if (roman_dec[index] == 'X' || roman_dec[index] == 'L' && tens == True)
-	{
-		hundereds = False; thousands = False;
-		int count = 1;
-
-		if(roman_dec[index] == 'X' && roman_dec[index+1] == 'C')
+		
+		//TENS PLACE
+		if (roman_dec[index] == 'X' || roman_dec[index] == 'L')
 		{
-			value += 90;
-			index+= 2;
+			hundereds = False; thousands = False;
+			int count = 1;
+			if(tens == True)
+			{
+				if(roman_dec[index] == 'X' && roman_dec[index+1] == 'C')
+				{
+					value += 90;
+					index+= 2;
+					tens = False;
+				}
+
+				if(roman_dec[index] == 'X' && roman_dec[index+1] == 'L')
+				{
+					value += 40;
+					index += 2;
+					tens = False;
+				}
+
+				if(roman_dec[index] == 'L')
+				{
+					value += 50;
+					index++;
+				} 
+
+				while(roman_dec[index] == 'X' && tens == True && count < 4)
+				{
+					value += 10;
+					index++;
+					count++;
+				}
+			}
+			else
+			{
+				error_check(INVALID_ROMAN_NUMBER_ERROR);
+			}
 			tens = False;
 		}
 
-		if(roman_dec[index] == 'X' && roman_dec[index+1] == 'L')
+
+		//UNITS PLACE
+		if (roman_dec[index] == 'I' || roman_dec[index] == 'V')
 		{
-			value += 40;
-			index += 2;
-			tens = False;
-		}
+			hundereds = False; thousands = False; tens = False;
+			int count = 1;
 
-		if(roman_dec[index] == 'L')
-		{
-			value += 50;
-			index++;
-		} 
+			if(units == True)
+			{
+				if(roman_dec[index] == 'I' && roman_dec[index+1] == 'X')
+				{
+					value += 9;
+					index+= 2;
+					units = False;
+				}
 
-		while(roman_dec[index] == 'X' && tens == True && count < 4)
-		{
-			value += 10;
-			index++;
-			count++;
-		}
+				if(roman_dec[index] == 'I' && roman_dec[index+1] == 'V')
+				{
+					value += 4;
+					index += 2;
+					units = False;
+				}
 
-		tens = False;
-	}
+				if(roman_dec[index] == 'V')
+				{
+					value += 5;
+					index++;
+				} 
 
-
-	//UNITS PLACE
-	if (roman_dec[index] == 'I' || roman_dec[index] == 'V' && units == True)
-	{
-		hundereds = False; thousands = False; tens = False;
-		int count = 1;
-
-		if(roman_dec[index] == 'I' && roman_dec[index+1] == 'X')
-		{
-			value += 9;
-			index+= 2;
+				while(roman_dec[index] == 'I' && units == True && count < 4)
+				{
+					value += 1;
+					index++;
+					count++;
+				}
+			}
+			else
+			{
+				error_check(INVALID_ROMAN_NUMBER_ERROR);
+			}
 			units = False;
 		}
-
-		if(roman_dec[index] == 'I' && roman_dec[index+1] == 'V')
-		{
-			value += 4;
-			index += 2;
-			units = False;
-		}
-
-		if(roman_dec[index] == 'V')
-		{
-			value += 5;
-			index++;
-		} 
-
-		while(roman_dec[index] == 'I' && units == True && count < 4)
-		{
-			value += 1;
-			index++;
-			count++;
-		}
-
-		units = False;
 	}
 	return value;
 }
@@ -211,7 +241,8 @@ char* dec2roman(int value)
 	roman_result=NULL;
 	roman_result_size = 0; 
 	roman_result_index = 0;
-	
+	if(remainder == 0)
+		return roman_result;
 	while(remainder != 0)
 	{
 		remainder = get_unit_roman(value, digit_place);
@@ -375,7 +406,7 @@ char* get_roman()
     	}
 
 		if (ch == EOF || ch == '\n')
-            ch = 0;
+            ch = '\0';
 
         if (size <= index) 
         {
@@ -390,9 +421,85 @@ char* get_roman()
 
             line = tmp;
         }
-
-        line[index++] = ch;
+        if(error == VALID_CHAR)
+	        line[index++] = ch;
 	}
-	error_check(error);
+	if(error_check(error))
+	{	
+		line = NULL;
+	}
+
 	return line;
+}
+
+/*
+* 	This function choses the operation to perform. 
+*/
+char get_operation()
+{
+	char operator;
+	char ch='A';
+	while(ch)
+	{
+		ch = getc(stdin);
+		if(ch == '+' || ch == '-')
+		{
+			operator = ch;
+			//ch = 0;
+			break;
+		}
+		else
+		{
+			error_check(INVALID_OPERATION);
+			break;
+		}
+
+		if(ch = '\n')
+		{
+			ch = 0;
+			if(operator = 0)
+				error_check(NO_OPERATOR_CHOSEN);
+		}
+	}
+	return operator;
+}
+
+bool error_check(int error)
+{
+	switch(error)
+	{
+		case INVALID_CHAR_ERROR :
+			printf("Error: Invalid Roman Character : Non-Roman Character identified. Valid Roman Numbers are M, D, C, L, X, V, I.\n");
+			printf("Note: All Roman Characters are to be in Capitals Letters. Enter a Valid Roman Number.\n");
+			exit(0);
+
+		case INVALID_SPACE_ERROR :
+			printf("Error: Invalid Space: Tabs and Space Identified. No Tabs and Space allowed in a Roman Number.\n");
+			printf("Note: Re-Enter a Valid Roman Number without any spaces and tabs.\n");
+			exit(0);
+
+		case INVALID_ROMAN_NUMBER_ERROR :
+			printf("Error: Invalid Roman Number: Not a valid Roman Number and does not exist.\n");
+			printf("Note: Check the roman number and Re-Enter a valid Roman Number.\n");
+			exit(0);
+
+		case INVALID_OPERATION :
+			printf("Error: Invalid Operation: The given operation is not + or -.\n");
+			printf("Note: Give either + or -. Re- Enter the operator. \n");
+			exit(0);
+
+		case NO_OPERATOR_CHOSEN :
+			printf("Error: No Operation: No valid operation given.\n");
+			printf("Note: Give + or - as the operator.\n");
+			exit(0);
+
+		case NEGATIVE_DIFFERENCE :
+			printf("Error: Negative or Zero Difference: The resulting difference is not positive interger.\n");
+			printf("Note: For Subtraction, give the First number greater than the Second number. Re-run the program\n");
+			exit(0);
+
+		default:
+			break;
+	}
+	return(False);
 }

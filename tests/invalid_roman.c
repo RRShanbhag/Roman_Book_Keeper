@@ -79,7 +79,7 @@ START_TEST(test_A)
 {
 	Roman *roman;
 	
-    roman = roman_create("A", 0);
+    roman = roman_create("A", 10);
     
     ck_assert_int_eq(decimal_number(roman),roman2dec("A"));
     ck_assert_str_eq(roman_number(roman),dec2roman(0));
