@@ -1,0 +1,4 @@
+Running suite(s): Roman
+0%: Checks: 1, Failures: 1, Errors: 0
+roman_dec.c:33:F:Core:test_roman_create:0: Assertion 'decimal_number(roman) == 10' failed: decimal_number(roman) == 1, 10 == 10
+FAIL roman_dec (exit status: 1)

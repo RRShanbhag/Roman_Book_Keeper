@@ -1,0 +1,45 @@
+================================================
+   Roman_Calculator 1.0: tests/test-suite.log
+================================================
+
+# TOTAL: 2
+# PASS:  0
+# SKIP:  0
+# XFAIL: 1
+# FAIL:  1
+# XPASS: 0
+# ERROR: 0
+
+.. contents:: :depth: 2
+
+FAIL: roman_dec
+===============
+
+Running suite(s): Roman
+0%: Checks: 1, Failures: 1, Errors: 0
+roman_dec.c:33:F:Core:test_roman_create:0: Assertion 'decimal_number(roman) == 10' failed: decimal_number(roman) == 1, 10 == 10
+FAIL roman_dec (exit status: 1)
+
+XFAIL: invalid_roman
+====================
+
+Running suite(s): Invalid_Roman
+Error: Invalid Roman Number: Not a valid Roman Number and does not exist.
+Note: Check the roman number and Re-Enter a valid Roman Number.
+Error: Invalid Roman Number: Not a valid Roman Number and does not exist.
+Note: Check the roman number and Re-Enter a valid Roman Number.
+Error: Invalid Roman Number: Not a valid Roman Number and does not exist.
+Note: Check the roman number and Re-Enter a valid Roman Number.
+Error: Invalid Roman Number: Not a valid Roman Number and does not exist.
+Note: Check the roman number and Re-Enter a valid Roman Number.
+Error: Invalid Roman Number: Not a valid Roman Number and does not exist.
+Note: Check the roman number and Re-Enter a valid Roman Number.
+83%: Checks: 6, Failures: 0, Errors: 1
+invalid_roman.c:13:P:Limits:test_5Is:0: Passed
+invalid_roman.c:26:P:Limits:test_XCX:0: Passed
+invalid_roman.c:39:P:Limits:test_IXC:0: Passed
+invalid_roman.c:52:P:Limits:test_DD:0: Passed
+invalid_roman.c:65:P:Limits:test_VL:0: Passed
+invalid_roman.c:78:E:Limits:test_A:0: (after this point) Test timeout expired
+XFAIL invalid_roman (exit status: 1)
+

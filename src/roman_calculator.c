@@ -73,6 +73,7 @@ int roman2dec(char* roman_dec)
 	int index = 0;
 	bool units = True, tens = True, hundereds = True, thousands = True;
 
+
 	while(index < strlen(roman_dec))
 	{
 		if(roman_dec[index] == '\n')
@@ -285,7 +286,8 @@ int get_unit_roman(int value, int digit_place)
 	
 	if (digit_place == 0)
 	{
-		for(int i = 0; i < quotient1; i++)
+		int i;
+		for(i = 0; i < quotient1; i++)
 		{
 			ch = roman_numbers[digit_place];
 			insert_char(ch);
@@ -315,7 +317,8 @@ int get_unit_roman(int value, int digit_place)
 
 		if (quotient2 != 0 && quotient2 != 4)
 		{
-			for (int i = 0; i < quotient2; i++)
+			int i;
+			for (i = 0; i < quotient2; i++)
 			{
 				ch = roman_numbers[digit_place+1];
 				insert_char(ch);
@@ -343,7 +346,8 @@ int get_unit_roman(int value, int digit_place)
 		{
 			ch = roman_numbers[digit_place];
 			insert_char(ch);
-			for(int i = 0; i < quotient2; i++)
+			int i;
+			for(i = 0; i < quotient2; i++)
 			{
 				ch = roman_numbers[digit_place+1];
 				insert_char(ch);
@@ -392,8 +396,9 @@ char* get_roman()
     		error = INVALID_SPACE_ERROR;
     		break;
     	}
-
-    	for(int i = 0; i < 7; i++)
+    	
+    	int i;
+    	for(i = 0; i < 7; i++)
     	{
     		if(ch == roman_numbers[i] || ch == '\n')
     			error = VALID_CHAR;

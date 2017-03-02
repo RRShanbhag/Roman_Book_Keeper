@@ -33,6 +33,8 @@ int main(void)
     if (operator == '-')
     {
     	sum = decimal_number(first_roman) - decimal_number(second_roman);
+    	if (sum <= 0)
+			error_check(NEGATIVE_DIFFERENCE);
     }
 
     answer_roman = roman_create(dec2roman(sum), sum);

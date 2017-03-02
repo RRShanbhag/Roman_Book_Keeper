@@ -1,0 +1,19 @@
+Running suite(s): Invalid_Roman
+Error: Invalid Roman Number: Not a valid Roman Number and does not exist.
+Note: Check the roman number and Re-Enter a valid Roman Number.
+Error: Invalid Roman Number: Not a valid Roman Number and does not exist.
+Note: Check the roman number and Re-Enter a valid Roman Number.
+Error: Invalid Roman Number: Not a valid Roman Number and does not exist.
+Note: Check the roman number and Re-Enter a valid Roman Number.
+Error: Invalid Roman Number: Not a valid Roman Number and does not exist.
+Note: Check the roman number and Re-Enter a valid Roman Number.
+Error: Invalid Roman Number: Not a valid Roman Number and does not exist.
+Note: Check the roman number and Re-Enter a valid Roman Number.
+83%: Checks: 6, Failures: 0, Errors: 1
+invalid_roman.c:13:P:Limits:test_5Is:0: Passed
+invalid_roman.c:26:P:Limits:test_XCX:0: Passed
+invalid_roman.c:39:P:Limits:test_IXC:0: Passed
+invalid_roman.c:52:P:Limits:test_DD:0: Passed
+invalid_roman.c:65:P:Limits:test_VL:0: Passed
+invalid_roman.c:78:E:Limits:test_A:0: (after this point) Test timeout expired
+XFAIL invalid_roman (exit status: 1)
